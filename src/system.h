@@ -128,12 +128,13 @@ enum
 
 /* Redirection and wildcarding when done by the utility itself.
    Generally a noop, but used in particular for OS/2.  */
+#include "/usr/local/lib/afl/argv-fuzz-inl.h"
 #ifndef initialize_main
 # ifndef __OS2__
 #  define initialize_main(ac, av)
 # else
 #  define initialize_main(ac, av) \
-     do { _wildcard (ac, av); _response (ac, av); } while (0)
+     do { char argv0[512]; strcpy(argv[0], argv0); AFL_INIT_SET0(argv0); _wildcard (ac, av); _response (ac, av); } while (0)
 # endif
 #endif
 
