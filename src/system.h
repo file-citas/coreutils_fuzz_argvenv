@@ -132,10 +132,10 @@ enum
 #ifndef initialize_main
 # ifndef __OS2__
 #  define initialize_main(ac, av) \
-     do { char argv0[512]; strcpy(argv[0], argv0); AFL_INIT_SET0(argv0); } while (0)
+     do { if(is_fuzzing()) {char argv0[512]; strcpy(argv[0], argv0); AFL_INIT_SET0(argv0);} } while (0)
 # else
 #  define initialize_main(ac, av) \
-     do { char argv0[512]; strcpy(argv[0], argv0); AFL_INIT_SET0(argv0); _wildcard (ac, av); _response (ac, av); } while (0)
+     do { if(is_fuzzing()) {char argv0[512]; strcpy(argv[0], argv0); AFL_INIT_SET0(argv0); _wildcard (ac, av); _response (ac, av);} } while (0)
 # endif
 #endif
 
